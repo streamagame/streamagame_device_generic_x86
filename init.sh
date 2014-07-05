@@ -201,7 +201,6 @@ function init_hal_sensors()
 			;;
 		*ThinkPad*Tablet*)
 			set_property hal.sensors hdaps
-			start wacom-input
 			;;
 		*)
 			set_property hal.sensors kbd
@@ -284,6 +283,27 @@ function do_bootcomplete()
 	for bt in $(lsusb -v | awk ' /Class:.E0/ { print $9 } '); do
 		chown 1002.1002 $bt && chmod 660 $bt
 	done
+
+	case "$PRODUCT" in
+		1866???|1867???|1869???) # ThinkPad X41 Tablet
+			start tablet-mode
+			start wacom-input
+			;;
+		6363???|6364???|6366???) # ThinkPad X60 Tablet
+			start tablet-mode
+			start wacom-input
+			;;
+		7762???|7763???|7767???) # ThinkPad X61 Tablet
+			start tablet-mode
+			start wacom-input
+			;;
+		7448???|7449???|7450???|7453???) # ThinkPad X200 Tablet
+			start tablet-mode
+			start wacom-input
+			;;
+		*)
+			;;
+	esac
 }
 
 PATH=/system/bin:/system/xbin

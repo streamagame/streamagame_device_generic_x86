@@ -53,6 +53,7 @@ PRODUCT_PACKAGES := \
     ssh \
     sshd \
     su \
+    tablet-mode \
     wacom-input \
 
 PRODUCT_PACKAGES += \

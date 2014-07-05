@@ -152,7 +152,10 @@ service logcat /system/bin/logcat -v threadtime -f /data/log.txt
     class debug
 
 service wacom-input /system/bin/wacom-input
-    class late_start
+    disabled
+    oneshot
+
+service tablet-mode /system/bin/tablet-mode
     disabled
     oneshot
 
