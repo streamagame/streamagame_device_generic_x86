@@ -200,6 +200,7 @@ function init_hal_sensors()
 			echo -n "enabled" > /sys/class/thermal/thermal_zone0/mode
 			;;
 		*ThinkPad*Tablet*)
+			modprobe hdaps
 			set_property hal.sensors hdaps
 			;;
 		*)
