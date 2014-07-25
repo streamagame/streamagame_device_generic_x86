@@ -41,6 +41,7 @@ PRODUCT_PACKAGES := \
     icu.dat \
     io_switch \
     libFFmpegExtractor \
+    libhuaweigeneric-ril \
     libstagefright_soft_ffmpegadec \
     libstagefright_soft_ffmpegvdec \
     lights.default \

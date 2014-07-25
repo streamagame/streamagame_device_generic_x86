@@ -228,12 +228,14 @@ function init_tscal()
 
 function init_ril()
 {
-	case "$PRODUCT" in
-		TEGA*|Intel*)
-			set_property rild.libpath /system/lib/libreference-ril.so
-			set_property rild.libargs "-d /dev/ttyUSB2"
+	case "$(cat $DMIPATH/uevent)" in
+		*TEGA*|*2010:svnIntel:*|*Lucid-MWE*)
+			set_property rild.libpath /system/lib/libhuaweigeneric-ril.so
+			set_property rild.libargs "-d /dev/ttyUSB2 -v /dev/ttyUSB1"
 			;;
 		*)
+			set_property rild.libpath /system/lib/libreference-ril.so
+			set_property rild.libargs "-d /dev/ttyUSB2"
 			;;
 	esac
 }
