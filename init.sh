@@ -291,18 +291,33 @@ function do_bootcomplete()
 		1866???|1867???|1869???) # ThinkPad X41 Tablet
 			start tablet-mode
 			start wacom-input
+			setkeycodes 0x6d 115
+			setkeycodes 0x6e 114
+			setkeycodes 0x69 28
+			setkeycodes 0x6b 158
+			setkeycodes 0x68 172
+			setkeycodes 0x6c 127
+			setkeycodes 0x67 217
 			;;
 		6363???|6364???|6366???) # ThinkPad X60 Tablet
-			start tablet-mode
-			start wacom-input
-			;;
+			;&
 		7762???|7763???|7767???) # ThinkPad X61 Tablet
 			start tablet-mode
 			start wacom-input
+			setkeycodes 0x6d 115
+			setkeycodes 0x6e 114
+			setkeycodes 0x69 28
+			setkeycodes 0x6b 158
+			setkeycodes 0x68 172
+			setkeycodes 0x6c 127
+			setkeycodes 0x67 217
 			;;
 		7448???|7449???|7450???|7453???) # ThinkPad X200 Tablet
 			start tablet-mode
 			start wacom-input
+			setkeycodes 0xe012 158
+			setkeycodes 0x66 172
+			setkeycodes 0x6b 127
 			;;
 		*)
 			;;
