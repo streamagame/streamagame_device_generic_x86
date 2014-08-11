@@ -209,21 +209,38 @@ function init_hal_sensors()
 	esac
 }
 
+function create_pointercal()
+{
+	if [ ! -e /data/misc/tscal/pointercal ]; then
+		mkdir -p /data/misc/tscal
+		touch /data/misc/tscal/pointercal
+		chown 1000.1000 /data/misc/tscal /data/misc/tscal/*
+		chmod 775 /data/misc/tscal
+		chmod 664 /data/misc/tscal/pointercal
+	fi
+}
+
 function init_tscal()
 {
 	case "$PRODUCT" in
 		T91|T101|ET2002|74499FU|945GSE-ITE8712)
-			if [ ! -e /data/misc/tscal/pointercal ]; then
-				mkdir -p /data/misc/tscal
-				touch /data/misc/tscal/pointercal
-				chown 1000.1000 /data/misc/tscal /data/misc/tscal/*
-				chmod 775 /data/misc/tscal
-				chmod 664 /data/misc/tscal/pointercal
-			fi
+			create_pointercal
+			return
 			;;
 		*)
 			;;
 	esac
+
+	for usbts in $(lsusb | awk '{ print $6 }'); do
+		case "$usbts" in
+			0596:0001)
+				create_pointercal
+				return
+				;;
+			*)
+				;;
+		esac
+	done
 }
 
 function init_ril()
