@@ -135,6 +135,10 @@ function init_hal_lights()
 
 function init_hal_power()
 {
+	for p in /sys/class/rtc/*; do
+		echo disabled > $p/device/power/wakeup
+	done
+
 	# TODO
 	case "$PRODUCT" in
 		*)
