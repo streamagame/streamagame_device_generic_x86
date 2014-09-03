@@ -233,7 +233,7 @@ function init_tscal()
 
 	for usbts in $(lsusb | awk '{ print $6 }'); do
 		case "$usbts" in
-			0596:0001)
+			0596:0001|0eef:0001)
 				create_pointercal
 				return
 				;;
