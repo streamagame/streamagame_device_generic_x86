@@ -162,6 +162,17 @@ function init_hal_sensors()
 		*ICONIA*W5*)
 			set_property hal.sensors w500
 			;;
+		*Zmax*B10T*)
+			modprobe kfifo-buf
+			modprobe industrialio-triggered-buffer
+			modprobe hid-sensor-hub
+			modprobe hid-sensor-iio-common
+			modprobe hid-sensor-trigger
+			modprobe hid-sensor-accel-3d
+			modprobe hid-sensor-als
+			sleep 1; busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
+			set_property hal.sensors hsb
+			;;
 		*S10-3t*)
 			set_property hal.sensors s103t
 			;;
