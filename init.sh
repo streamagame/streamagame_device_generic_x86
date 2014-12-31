@@ -20,7 +20,6 @@ function init_misc()
 
 	case "$PRODUCT" in
 		T10*TA)
-			echo on > /sys/bus/platform/drivers/sdhci-acpi/INT33BB:00/power/control
 			;;
 		*)
 			;;
@@ -142,36 +141,12 @@ function init_hal_power()
 function init_hal_sensors()
 {
 	case "$(cat $DMIPATH/uevent)" in
-		*T*00LA*)
-			modprobe kfifo-buf
-			modprobe industrialio-triggered-buffer
-			modprobe hid-sensor-hub
-			modprobe hid-sensor-iio-common
-			modprobe hid-sensor-trigger
-			modprobe hid-sensor-accel-3d
-			modprobe hid-sensor-gyro-3d
-			modprobe hid-sensor-als
-			modprobe hid-sensor-magn-3d
-			sleep 1; busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
-			set_property hal.sensors hsb
-			;;
 		*Lucid-MWE*)
 			set_property ro.ignore_atkbd 1
 			set_property hal.sensors hdaps
 			;;
 		*ICONIA*W5*)
 			set_property hal.sensors w500
-			;;
-		*Zmax*B10T*)
-			modprobe kfifo-buf
-			modprobe industrialio-triggered-buffer
-			modprobe hid-sensor-hub
-			modprobe hid-sensor-iio-common
-			modprobe hid-sensor-trigger
-			modprobe hid-sensor-accel-3d
-			modprobe hid-sensor-als
-			sleep 1; busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
-			set_property hal.sensors hsb
 			;;
 		*S10-3t*)
 			set_property hal.sensors s103t
@@ -190,6 +165,19 @@ function init_hal_sensors()
 			io_switch 0x0 0x1
 			setkeycodes 0x6d 125
 			;;
+		*DLI*)
+			set_property ro.ignore_atkbd 1
+			set_property hal.sensors kbd
+			set_property hal.sensors.kbd.type 1
+			setkeycodes 0x64 1
+			setkeycodes 0x65 172
+			setkeycodes 0x66 127
+			setkeycodes 0x67 116
+			setkeycodes 0x68 114
+			setkeycodes 0x69 115
+			setkeycodes 0x6c 114
+			setkeycodes 0x6d 115
+			;;
 		*tx2*)
 			setkeycodes 0xb1 138
 			setkeycodes 0x8a 152
@@ -200,7 +188,9 @@ function init_hal_sensors()
 			;;
 		*MS-N0E1*)
 			set_property ro.ignore_atkbd 1
-			set_property poweroff.doubleclick 0
+			setkeycodes 0xa5 125
+			setkeycodes 0xa7 1
+			setkeycodes 0xe3 142
 			;;
 		*Aspire1*25*)
 			modprobe lis3lv02d_i2c
@@ -215,6 +205,15 @@ function init_hal_sensors()
 			set_property hal.sensors kbd
 			;;
 	esac
+
+	# has sensor-hub?
+	for i in /sys/bus/iio/devices/iio:device?; do
+		if [ -e $i/in_accel_scale ]; then
+			busybox chown -R 1000.1000 /sys/bus/iio/devices/iio:device?/
+			set_property hal.sensors hsb
+			break
+		fi
+	done
 }
 
 function create_pointercal()
@@ -308,9 +307,12 @@ function do_bootcomplete()
 	# FIXME: autosleep works better on i965?
 	[ "$(getprop debug.mesa.driver)" = "i965" ] && setprop debug.autosleep 1
 
+	lsmod | grep -e brcmfmac && setprop wlan.no-unload-driver 1
+
 	for bt in $(lsusb -v | awk ' /Class:.E0/ { print $9 } '); do
 		chown 1002.1002 $bt && chmod 660 $bt
 	done
+#	am force-stop com.android.bluetooth
 
 	case "$PRODUCT" in
 		1866???|1867???|1869???) # ThinkPad X41 Tablet
