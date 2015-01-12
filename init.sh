@@ -230,7 +230,7 @@ function create_pointercal()
 function init_tscal()
 {
 	case "$PRODUCT" in
-		T91|T101|ET2002|74499FU|945GSE-ITE8712|CF-19[CDYFGKLP]*)
+		T91|T101|ET2002|945GSE-ITE8712|CF-19[CDYFGKLP]*)
 			create_pointercal
 			return
 			;;
@@ -341,7 +341,7 @@ function do_bootcomplete()
 			;;
 		7448???|7449???|7450???|7453???) # ThinkPad X200 Tablet
 			start tablet-mode
-			start wacom-input
+			start inputattach
 			setkeycodes 0xe012 158
 			setkeycodes 0x66 172
 			setkeycodes 0x6b 127

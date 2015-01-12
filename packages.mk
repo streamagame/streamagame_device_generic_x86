@@ -39,6 +39,7 @@ PRODUCT_PACKAGES := \
     gps.default \
     hwcomposer.x86 \
     icu.dat \
+    inputattach \
     io_switch \
     libFFmpegExtractor \
     libhuaweigeneric-ril \
