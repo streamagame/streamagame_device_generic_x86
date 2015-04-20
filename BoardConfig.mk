@@ -78,7 +78,7 @@ WPA_SUPPLICANT_VERSION ?= VER_0_8_X
 WIFI_DRIVER_MODULE_PATH ?= auto
 
 #BOARD_GPU_DRIVERS ?= i915 i965 ilo r300g r600g nouveau vmwgfx
-BOARD_GPU_DRIVERS ?= i915 i965 nouveau r300g r600g swrast
+BOARD_GPU_DRIVERS ?= i915 i965 nouveau r300g r600g swrast vmwgfx
 ifneq ($(strip $(BOARD_GPU_DRIVERS)),)
 TARGET_HARDWARE_3D := true
 BOARD_EGL_CFG ?= device/generic/x86/gpu/egl_mesa.cfg
