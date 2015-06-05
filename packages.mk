@@ -37,6 +37,7 @@ PRODUCT_PACKAGES := \
     drmserver \
     eject \
     gps.default \
+    gps.huawei \
     hwcomposer.x86 \
     icu.dat \
     inputattach \
