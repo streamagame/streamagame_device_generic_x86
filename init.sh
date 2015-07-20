@@ -48,7 +48,7 @@ function init_hal_bluetooth()
 			for bt in $(lsusb -v | awk ' /Class:.E0/ { print $9 } '); do
 				chown 1002.1002 $bt && chmod 660 $bt
 			done
-			[ -n "$bt" ] && modprobe btusb
+			modprobe btusb
 			;;
 	esac
 
